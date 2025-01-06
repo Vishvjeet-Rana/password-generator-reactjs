@@ -131,7 +131,7 @@ function App() {
                 className="mt-5 ml-5 h-5 w-5 bg-black outline-none"
               />
               <label htmlFor="charInput" className="mt-5">
-                &nbsp;: Characters
+                &nbsp;: Special Characters
               </label>
             </div>
           </div>
