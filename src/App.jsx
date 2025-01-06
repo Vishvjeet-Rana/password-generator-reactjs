@@ -1,12 +1,16 @@
 import { useEffect } from "react";
+import { useRef } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
+// import "./TextAnimation.css";
 
 function App() {
   const [length, setLength] = useState(8);
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charsAllowed, setCharsAllowed] = useState(false);
   const [password, setPassword] = useState("");
+
+  const passwordReference = useRef();
 
   const passowordGenerator = useCallback(() => {
     let pass = [];
@@ -37,35 +41,50 @@ function App() {
     setPassword(pass.join(""));
   }, [length, numberAllowed, charsAllowed, setPassword]);
 
+  const copyPasswordInClipBoard = useCallback(() => {
+    // when copy then input shows selection effect
+    passwordReference.current?.select();
+
+    // for selecting a specific range
+    // passwordReference.current?.setSelectionRange(0, 3);
+
+    // for copying on clipboard
+    window.navigator.clipboard.writeText(password);
+  }, [password]);
+
   useEffect(() => {
     passowordGenerator();
   }, [length, numberAllowed, charsAllowed, passowordGenerator]);
 
   return (
     <>
-      <div className="top-0 right-0 bottom-0 left-0 w-full max-w-md mx-auto absolute bg-red-300 my-10 font-mono">
-        <h1 className="font-semibold text-3xl mb-4 text-center font-mono">
+      <div className="top-0 right-0 bottom-0 left-0 w-full max-w-md mx-auto absolute my-10 font-mono">
+        <h1 className="font-semibold text-4xl mb-4 text-center font-mono text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-400 to-black bg-[length:400%_100%] animate-gradient-shine">
           Password Generator
         </h1>
         {/* main content container > */}
-        <div className="flex justify-center shadow-md rounded-xl overflow-hidden mb-4 bg-red-500 flex-wrap py-4 px-1">
+        <div className="flex justify-center shadow-md rounded-xl overflow-hidden mb-4 shadow-white bg-gray-700 flex-wrap py-4 px-1">
           <div className="flex w-full">
             {/* input where you will get the password */}
             <input
               // type="text"
               placeholder="passoword"
               value={password}
+              ref={passwordReference}
               readOnly
               className="outline-none w-[80%] mr-2 py-1 px-3 h-14 rounded-xl"
             />
 
             {/* button for copying the password */}
-            <button className="outline-none shrink-0 rounded-xl font-bold text-white bg-blue-600 cursor-pointer">
+            <button
+              className="outline-none shrink-0 rounded-xl  text-white bg-blue-600 hover:bg-blue-900 hover:font-extrabold cursor-pointer focus:outline-none transform transition-transform duration-200 hover:scale-110"
+              onClick={copyPasswordInClipBoard}
+            >
               Copy
             </button>
           </div>
 
-          <div className="flex flex-col justify-center items-center bg-orange-400 mt-5 px-4 py-4">
+          <div className="flex flex-col justify-center items-center  mt-5 px-4 py-4 text-lg">
             {/* input for setting range of passoword length */}
             <div className="my-2 mx-3 flex justify-center items-center">
               <input
@@ -93,7 +112,7 @@ function App() {
                   setNumberAllowed((prev) => !prev);
                 }}
                 id="numberInput"
-                className="mt-5 ml-5 bg-black outline-none"
+                className="mt-5 ml-5 h-5 w-5 bg-black outline-none"
               />
               <label htmlFor="numberInput" className="mt-5">
                 &nbsp;: Numbers
@@ -109,7 +128,7 @@ function App() {
                   setCharsAllowed((prev) => !prev);
                 }}
                 id="charInput"
-                className="mt-5 ml-5 bg-black outline-none"
+                className="mt-5 ml-5 h-5 w-5 bg-black outline-none"
               />
               <label htmlFor="charInput" className="mt-5">
                 &nbsp;: Characters
