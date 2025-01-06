@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
 
@@ -8,17 +9,37 @@ function App() {
   const [password, setPassword] = useState("");
 
   const passowordGenerator = useCallback(() => {
-    let pass = "";
+    let pass = [];
     let string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     let chars = "~!@#$%^&*()-+";
     let numbers = "0123456789";
 
-    for (let i = 0; i < length; i++) {
-      let charIndex = Math.floor(Math.random() * string.length + 1);
-
-      pass = string.charAt(charIndex);
+    if (charsAllowed) {
+      pass.push(chars.charAt(Math.floor(Math.random() * chars.length + 1)));
+      string += chars;
     }
+    if (numberAllowed) {
+      pass.push(numbers.charAt(Math.floor(Math.random() * numbers.length + 1)));
+      string += numbers;
+    }
+
+    while (pass.length < length) {
+      let charIndex = Math.floor(Math.random() * string.length + 1);
+      pass.push(string.charAt(charIndex));
+    }
+
+    // shuffle the "pass" array for more secure password
+    for (let i = pass.length; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [pass[i], pass[j]] = [pass[j], pass[i]]; // swapping actually
+    }
+
+    setPassword(pass.join(""));
   }, [length, numberAllowed, charsAllowed, setPassword]);
+
+  useEffect(() => {
+    passowordGenerator();
+  }, [length, numberAllowed, charsAllowed, passowordGenerator]);
 
   return (
     <>
@@ -29,8 +50,9 @@ function App() {
         {/* main content container > */}
         <div className="flex justify-center shadow-md rounded-xl overflow-hidden mb-4 bg-red-500 flex-wrap py-4 px-1">
           <div className="flex w-full">
+            {/* input where you will get the password */}
             <input
-              type="text"
+              // type="text"
               placeholder="passoword"
               value={password}
               readOnly
