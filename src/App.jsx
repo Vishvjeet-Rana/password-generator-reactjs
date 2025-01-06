@@ -48,7 +48,7 @@ function App() {
     // for selecting a specific range
     // passwordReference.current?.setSelectionRange(0, 3);
 
-    // for copying on clipboard
+    // for copying onto the clipboard
     window.navigator.clipboard.writeText(password);
   }, [password]);
 
