@@ -16,7 +16,7 @@ A React.js Password Generator that allows users to create strong and customizabl
 
 # 🎥 Demo
 
-[Live Demo (Add your deployed link here)](https://vishvjeet-rana.github.io/password-generator-reactjs/)
+https://vishvjeet-rana.github.io/password-generator-reactjs/
 
 # 🛠️ Installation & Setup
 
@@ -35,7 +35,7 @@ npm install
 
 ## _Run the app:_
 ```
-npm start
+npm run dev
 ```
 
 ## _Open http://localhost:3000/ in your browser._
@@ -64,8 +64,8 @@ npm start
 
 _Feel free to reach out for any queries or collaborations!_
 
-_LinkedIn: [Your LinkedIn_](https://www.linkedin.com/in/vishvjeet-rana/)
+_LinkedIn: [LinkedIn](https://www.linkedin.com/in/vishvjeet-rana/)
 
-_Twitter: [Your Twitter_](https://x.com/RVishvjeet_)
+_Twitter: [Twitter](https://x.com/RVishvjeet_)
 
 _Email: aryanrana62366@gmail.com
